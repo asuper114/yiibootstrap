@@ -55,7 +55,7 @@ return array(
             'userclass' => 'User', //可选,默认是 User
             'userid' => 'id', //可选,默认是 userid
             'username' => 'username', //可选，默认是 username
-            'debug' => true, //可选,默认是 false
+            'debug' => false, //可选,默认是 false
             'pageSize' => 10, //可选，默认是 15
             'superUser' => 'Authority', //可选，默认是 Authorizer
             'css' => 'srbac.css', //可选，默认是 srbac.css
@@ -101,6 +101,7 @@ return array(
         'bootstrap' => array(
             'class' => 'ext.bootstrap.components.Bootstrap',
             'responsiveCss' => true,
+             'yiiCss'=>true,
         ),
         // uncomment the following to enable URLs in path-format
         /*

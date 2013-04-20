@@ -50,6 +50,7 @@ class UserController extends Controller
 	 */
 	public function actionIndex()
 	{
+            
 		$dataProvider=new CActiveDataProvider('User', array(
 			'criteria'=>array(
 		        'condition'=>'status>'.User::STATUS_BANNED,

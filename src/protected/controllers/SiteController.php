@@ -27,6 +27,7 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
+            
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
 		$this->render('index');
@@ -37,6 +38,7 @@ class SiteController extends Controller
 	 */
 	public function actionError()
 	{
+            
 		if($error=Yii::app()->errorHandler->error)
 		{
 			if(Yii::app()->request->isAjaxRequest)
@@ -106,4 +108,15 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+        public function actionClear(){
+            $assetsPath =  Yii::app()->getAssetManager()->getBasePath();
+            
+        if(isset($_POST['btn'])){
+            //Yii::app()->cache->flush();
+            CFileHelper::rrmdir($assetsPath);
+            Yii::app()->user->setFlash('message', '成功清空缓存');
+            $this->redirect(array('/site/clear'), true);
+        }
+        $this->render('clear');
+    }
 }

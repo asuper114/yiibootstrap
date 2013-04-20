@@ -161,8 +161,6 @@ class Bootstrap extends CApplicationComponent
 	public function registerCoreCss()
 	{
 		$this->registerAssetCss('bootstrap' . (!YII_DEBUG ? '.min' : '') . '.css');
-                $this->registerAssetCss('style.css');
-                $this->registerAssetCss('blue.css');
 	}
 
 	/**
@@ -246,27 +244,7 @@ class Bootstrap extends CApplicationComponent
 			$cs->registerCssFile($this->getAssetsUrl() . '/css/bootstrap-notify.css');
 			$cs->registerScriptFile($this->getAssetsUrl() . '/js/bootstrap.notify.js', $position);
 		}
-                
 		$cs->registerScriptFile($this->getAssetsUrl() . '/js/bootstrap' . (!YII_DEBUG ? '.min' : '') . '.js', $position);
-                $cs->registerScriptFile($this->getAssetsUrl() . '/js/gebo_common.js', $position);
-                //$cs->registerScriptFile($this->getAssetsUrl() . '/js/gebo_dashboard.js', $position);
-                //qtip
-                $cs->registerScriptFile($this->getAssetsUrl() . '/js/qtip2/jquery.qtip.min.js', $position);
-                $cs->registerCssFile($this->getAssetsUrl() . '/js/qtip2/jquery.qtip.min.css');
-                //actual
-                $cs->registerScriptFile($this->getAssetsUrl() . '/js/jquery.actual.min.js', $position);
-                //jBreadcrumbs
-                $cs->registerScriptFile($this->getAssetsUrl() . '/js/jBreadcrumbs/jquery.jBreadCrumb.1.1.min.js', $position);
-                $cs->registerCssFile($this->getAssetsUrl() . '/js/jBreadcrumbs/BreadCrumb.css');
-                //antiscroll
-                $cs->registerScriptFile($this->getAssetsUrl() . '/js/antiscroll/antiscroll.js', $position);
-                $cs->registerScriptFile($this->getAssetsUrl() . '/js/antiscroll/jquery-mousewheel.js', $position);
-                
-                $cs->registerScriptFile($this->getAssetsUrl() . '/js/jquery.ui.totop.min.js', $position);
-                
-                $cs->registerScriptFile($this->getAssetsUrl() . '/js/jquery.peity.min.js', $position);
-                 
-                
 	}
 
 	/**
@@ -424,7 +402,6 @@ class Bootstrap extends CApplicationComponent
 		}
 		$this->registerPlugin(self::PLUGIN_TOOLTIP, $selector, $options, $this->tooltipSelector);
 	}
-        
 
 	/**
 	 * Registers the Bootstrap typeahead plugin.

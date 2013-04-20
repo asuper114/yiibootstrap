@@ -24,10 +24,14 @@ class TbDropdown extends TbBaseMenu
 	{
 		parent::init();
 
-		if (isset($this->htmlOptions['class']))
-			$this->htmlOptions['class'] .= ' dropdown-menu';
-		else
-			$this->htmlOptions['class'] = 'dropdown-menu';
+		if (isset($this->htmlOptions['class'])){
+                        if($this->htmlOptions['class'] !== false){
+                           $this->htmlOptions['class'] .= ' dropdown-menu'; 
+                        }
+                }else{
+                    $this->htmlOptions['class'] = 'dropdown-menu';
+                }
+			
 	}
 
 	/**
