@@ -30,6 +30,7 @@ class SBaseController extends CController {
    */
   protected function beforeAction($action) {
     $del = Helper::findModule('srbac')->delimeter;
+    Helper::findModule('srbac')->setAlwaysAllowed(array());
     
     //srbac access
     $mod = $this->module !== null ? $this->module->id . $del : "";

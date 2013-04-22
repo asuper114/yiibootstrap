@@ -9,6 +9,16 @@
     'items' => array(
         array('label'=>'List header',),
         array('label'=>'首页', 'url'=>array('/site/index'), 'icon'=>'icon-home',),
+        
+        array('label'=>'广告统计', 'url'=>array('/kxvad/index')),
+        
+        array('label'=>'渠道商管理', 'url'=>'#','linkOptions'=>array('class'=>''),
+                         'submenuOptions'=>array('class'=>false),
+                            'items'=>array(
+                                array('label'=>'添加','url'=>array('/channel/create')),
+                               array('label'=>'列表', 'url'=>array('/channel/admin')),
+                             ),
+            ),
         array('label'=>'用户管理', 'url'=>'#userMeun','linkOptions'=>array('class'=>''),
                             'submenuOptions'=>array('class'=>false),
                             'items'=>array(

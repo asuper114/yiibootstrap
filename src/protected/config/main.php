@@ -9,7 +9,7 @@ return array(
     'name' => 'My Web Application',
     'language' => 'zh_cn',
     // preloading 'log' component
-    'preload' => array('log','bootstrap'),
+    'preload' => array('log', 'bootstrap'),
     // autoloading model and component classes
     'import' => array(
         'application.models.*',
@@ -23,7 +23,7 @@ return array(
         /*
           'gii' => array(
           'class' => 'system.gii.GiiModule',
-          'password' => 'Enter Your Password Here',
+          'password' => 'kxv',
           // If removed, Gii defaults to localhost only. Edit carefully to taste.
           'ipFilters' => array('127.0.0.1', '::1'),
           ),
@@ -101,7 +101,7 @@ return array(
         'bootstrap' => array(
             'class' => 'ext.bootstrap.components.Bootstrap',
             'responsiveCss' => true,
-             'yiiCss'=>true,
+            'yiiCss' => true,
         ),
         // uncomment the following to enable URLs in path-format
         /*
@@ -122,12 +122,26 @@ return array(
         // uncomment the following to use a MySQL database
 
         'db' => array(
+            //'class' => 'CDbConnection',
             'connectionString' => 'mysql:host=localhost;dbname=yiibootstrap',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => '',
             'charset' => 'utf8',
             'tablePrefix' => '',
+            'enableProfiling'=>true,
+            'enableParamLogging'=>true,
+        ),
+        'db_kxv' => array(
+            'class' => 'CDbConnection',
+            'connectionString' => 'mysql:host=124.248.32.92;dbname=kxv_game',
+            'emulatePrepare' => true,
+            'username' => 'kxvdb',
+            'password' => 'kxvdbselect',
+            'charset' => 'utf8',
+            'tablePrefix' => '6173_',
+            'enableProfiling'=>true,
+            'enableParamLogging'=>true,
         ),
         'errorHandler' => array(
             // use 'site/error' action to display errors
@@ -140,12 +154,14 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error, warning',
                 ),
-            // uncomment the following to show log messages on web pages
-            /*
-              array(
-              'class'=>'CWebLogRoute',
-              ),
-             */
+                // uncomment the following to show log messages on web pages
+                ///*
+                array(
+                    'class' => 'CWebLogRoute',
+                    'levels' => 'trace', //级别为trace 
+                    'categories' => 'system.db.*'
+                ),
+            //*/
             ),
         ),
     ),

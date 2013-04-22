@@ -62,6 +62,7 @@ class User extends CActiveRecord
 			array('username, email, superuser, status', 'required'),
 			array('superuser, status', 'numerical', 'integerOnly'=>true),
 			array('id, username, password, email, activkey, create_at, lastvisit_at, superuser, status', 'safe', 'on'=>'search'),
+                        array('channel_id','safe'),
 		):((Yii::app()->user->id==$this->id)?array(
 			array('username, email', 'required'),
 			array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
@@ -102,6 +103,7 @@ class User extends CActiveRecord
 			'lastvisit_at' => UserModule::t("Last visit"),
 			'superuser' => UserModule::t("Superuser"),
 			'status' => UserModule::t("Status"),
+                        'channel_id' => Yii::t('channel',"channel_id"),
 		);
 	}
 	
@@ -121,7 +123,7 @@ class User extends CActiveRecord
                 'condition'=>'superuser=1',
             ),
             'notsafe'=>array(
-            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status',
+            	'select' => 'id, username, password, email, activkey, create_at, lastvisit_at, superuser, status,channel_id',
             ),
         );
     }
@@ -196,4 +198,20 @@ class User extends CActiveRecord
     public function setLastvisit($value) {
         $this->lastvisit_at=date('Y-m-d H:i:s',$value);
     }
+    /*
+     * @必须有返回值 布尔值
+     */
+    public function beforeSave(){
+        
+            if(parent::beforeSave())
+            {
+                if(isset($this->channel_id)&&  is_array($this->channel_id)&&!empty($this->channel_id)){
+                    $this->channel_id = implode(',', $this->channel_id);
+                    return true;
+                }
+            }else{
+                return  false;
+            }
+            
+        }
 }

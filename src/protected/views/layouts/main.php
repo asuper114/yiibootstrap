@@ -31,7 +31,7 @@
 
                                 <li class="divider-vertical hidden-phone hidden-tablet"></li>
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo Yii::app()->bootstrap->getAssetsUrl();?>/img/user_avatar.png" alt="" class="user_avatar">Johny Smith <b class="caret"></b></a>
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo Yii::app()->bootstrap->getAssetsUrl();?>/img/user_avatar.png" alt="" class="user_avatar"><?php echo Yii::app()->user->name;?> <b class="caret"></b></a>
                                     <ul class="dropdown-menu">
                                         <li><a href="/index.php?r=user/profile">My Profile</a></li>
 

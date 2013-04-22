@@ -111,7 +111,7 @@ class AdminController extends Controller
 		$this->performAjaxValidation(array($model,$profile));
 		if(isset($_POST['User']))
 		{
-			$model->attributes=$_POST['User'];
+			$model->attributes = $_POST['User'];
 			$profile->attributes=$_POST['Profile'];
 			
 			if($model->validate()&&$profile->validate()) {
@@ -176,12 +176,15 @@ class AdminController extends Controller
 	{
 		if($this->_model===null)
 		{
-			if(isset($_GET['id']))
+			if(isset($_GET['id'])){
 				$this->_model=User::model()->notsafe()->findbyPk($_GET['id']);
+                                $this->_model->channel_id = explode(',', $this->_model->channel_id);
+                        }
 			if($this->_model===null)
 				throw new CHttpException(404,'The requested page does not exist.');
 		}
 		return $this->_model;
 	}
+        
 	
 }

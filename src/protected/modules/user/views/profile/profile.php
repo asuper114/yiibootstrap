@@ -8,7 +8,7 @@ $this->menu=array(
 		:array()),
     array('label'=>UserModule::t('List User'), 'url'=>array('/user')),
     array('label'=>UserModule::t('Edit'), 'url'=>array('edit')),
-    array('label'=>UserModule::t('Change password'), 'url'=>array('changepassword')),
+    array('label'=>UserModule::t('Change Password'), 'url'=>array('changepassword')),
     array('label'=>UserModule::t('Logout'), 'url'=>array('/user/logout')),
 );
 ?><h1><?php echo UserModule::t('Your profile'); ?></h1>
