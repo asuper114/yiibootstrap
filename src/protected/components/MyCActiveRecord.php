@@ -3,17 +3,17 @@
  * for connection the other db 
  */
 
-class KxvCActiveRecord extends CActiveRecord
+class MyCActiveRecord extends CActiveRecord
 {
 	public function getDbConnection()
 	{
-            return self::$db=Yii::app()->getComponent('db_kxv');
+            return self::$db=Yii::app()->getComponent('db');
             
 		if(self::$db!==null)
 			return self::$db;
 		else
 		{
-			self::$db=Yii::app()->getComponent('db_kxv');
+			self::$db=Yii::app()->getComponent('db');
 			if(self::$db instanceof CDbConnection)
 				return self::$db;
 			else

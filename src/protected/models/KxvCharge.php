@@ -5,12 +5,13 @@
  * and open the template in the editor.
  */
 
-class KxvMember extends KxvCActiveRecord {
+class KxvCharge extends KxvCActiveRecord {
 
     private static $_items = array();
+    public $total;
     public $startDate;
     public $endDate;
-
+    
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -24,9 +25,8 @@ class KxvMember extends KxvCActiveRecord {
      * @return string the associated database table name
      */
     public function tableName() {
-        return '{{members}}';
+        return '{{payment_account}}';
     }
-
     public function rules() {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
@@ -34,27 +34,33 @@ class KxvMember extends KxvCActiveRecord {
             array('username,startDate,endDate', 'safe', 'on' => 'search'),
         );
     }
-
+    
     public function attributeLabels() {
         return array(
             'username' => "用户名",
-            'regdate' => "注册时间",
+            'pay_time' => "注册时间",
         );
     }
 
     public function search() {
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
-
+        $members = array();
+        if($code_id = Yii::app()->request->getQuery('code_id')){
+            $members = KxvMember::model()->getMembers($code_id,$this->username);
+        }
+        
         $criteria = new CDbCriteria;
-        $criteria->compare('code_id', Yii::app()->request->getQuery('code_id'));
-        $criteria->compare('username', $this->username, true);
+        $criteria->addCondition("pay_status=1"); 
+        $criteria->addInCondition('user_id', $members);
         if (!empty($this->startDate)) {
-            $criteria->addCondition("FROM_UNIXTIME(regdate,'%Y-%m-%d') >= '" . $this->startDate . "'");
+            
+            $criteria->addCondition("FROM_UNIXTIME(pay_time,'%Y-%m-%d') >= '" . $this->startDate . "'");
         }
         if (!empty($this->endDate)) {
-            $criteria->addCondition("FROM_UNIXTIME(regdate,'%Y-%m-%d') <= ' " . $this->endDate . "'");
+            $criteria->addCondition("FROM_UNIXTIME(pay_time,'%Y-%m-%d') <= '" . $this->endDate . "'");
         }
+        
         return new CActiveDataProvider(get_class($this), array(
                     'pagination' => array(
                         'pageSize' => 30,
@@ -65,23 +71,24 @@ class KxvMember extends KxvCActiveRecord {
                     'criteria' => $criteria,
                 ));
     }
-
-    public function getMembers($code_id, $username = NULL) {
-        $criteria = new CDbCriteria();
-        if(!empty($username)){
-            $criteria->addCondition("username='".$username."'");
-        }
-        $criteria->addCondition("code_id='".$code_id."'");
+    public function getChargeTotal($code_id,$username=NULL){
+       
+        $members = KxvMember::model()->getMembers($code_id);
+       
+        $criteria=new CDbCriteria();
+        $criteria->select = 'sum(pay_money)*0.01 as total';
+        $criteria->addCondition("pay_status=1"); 
+        $criteria->addInCondition('user_id', $members);
         
-        $members = self::model()->findAll($criteria);
-        $tmp = array();
-        foreach ($members as $key => $val) {
-            $tmp[] = $val->id;
-        }
-        if (!empty($tmp)) {
-            return $tmp;
-        }
-        return $tmp;
+        
+        $charge = self::model()->find($criteria);
+       
+        
+        return  !empty($charge->total) ? CHtml::link($charge->total,Yii::app()->createUrl("/Kxvad/charge",array("code_id"=>$code_id)),array("class"=>"external_link")):"";
+                
+       // return isset($charge->total)?$charge->total:0;
+        
+        //print_r($a);exit;
     }
 
 }

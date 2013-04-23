@@ -30,7 +30,21 @@ class Kxvad extends KxvCActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'member' => array(self::BELONGS_TO, 'KxvMember', array('code_id'=>'code_id'), 'order'=>'total DESC',),
+            'member' => array(self::BELONGS_TO, 'KxvMember', array('code_id' => 'code_id'), 'order' => 'total DESC',),
+        );
+    }
+
+    public function rules() {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('web', 'safe', 'on' => 'search'),
+        );
+    }
+
+    public function attributeLabels() {
+        return array(
+            'web' => "选择渠道商",
         );
     }
 
@@ -47,19 +61,23 @@ class Kxvad extends KxvCActiveRecord {
 
     public function search() {
         $criteria = new CDbCriteria;
-        $criteria->select = 'ad.id,ad.web,count(member.id) as total';
+        $criteria->select = 'ad.id,ad.web,ad.jq_file_url,ad.code_id,count(member.id) as total';
         $criteria->alias = 'ad';
         //$criteria->joinType = 'lef join';
         $criteria->with = 'member'; //调用relations   
         $criteria->group = 'ad.id';
-               return new CActiveDataProvider(get_class($this), array(
+        
+        $criteria->compare('web', $this->web, true);
+        
+        
+        return new CActiveDataProvider(get_class($this), array(
                     'pagination' => array(
-                        'pageSize' => 20, //设置每页显示20条
+                        'pageSize' => 30, //设置每页显示20条
                     ),
-            /*
-                    'sort' => array(
-                        'defaultOrder' => 'id asc', //设置默认排序是create_time倒序
-                    ),*/
+                    /*
+                      'sort' => array(
+                      'defaultOrder' => 'id asc', //设置默认排序是create_time倒序
+                      ), */
                     'criteria' => $criteria,
                 ));
     }

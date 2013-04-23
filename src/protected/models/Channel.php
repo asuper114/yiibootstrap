@@ -9,7 +9,7 @@
  * @property string $domain
  * @property string $desc
  */
-class Channel extends CActiveRecord {
+class Channel extends MyCActiveRecord {
 
     private static $_items = array();
 
@@ -19,8 +19,10 @@ class Channel extends CActiveRecord {
      * @return Channel the static model class
      */
     public static function model($className = __CLASS__) {
+        
         return parent::model($className);
     }
+    
 
     /**
      * @return string the associated database table name
@@ -93,5 +95,18 @@ class Channel extends CActiveRecord {
 		
 	return self::$_items;
     }
+    
+    public static function getItem($id)
+	{
+  		if(!isset(self::$_items[$id])){
+			self::loadItems();
+		}
+		//print_r(self::$_items);exit;
+		
+		return isset(self::$_items[$id]) ? self::$_items[$id] : false;
+	}
+        
+    
+    
 
 }
