@@ -6,34 +6,39 @@
 
 <div class="wide form">
 
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'action'=>Yii::app()->createUrl($this->route),
-	'method'=>'get',
-)); ?>
+    <?php
+    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
+        'type' => 'horizontal',
+        'action' => Yii::app()->createUrl($this->route),
+        'method' => 'get',
+            ));
+    ?>
 
-	<div class="row">
-		<?php echo $form->label($model,'channel_id'); ?>
-		<?php echo $form->textField($model,'channel_id'); ?>
-	</div>
+    <div class="control-group">
+<?php echo $form->textFieldRow($model, 'channel_id'); ?>
+    </div>
 
-	<div class="row">
-		<?php echo $form->label($model,'channel_name'); ?>
-		<?php echo $form->textField($model,'channel_name',array('size'=>20,'maxlength'=>20)); ?>
-	</div>
+    <div class="control-group">
+<?php echo $form->textFieldRow($model, 'channel_name', array('size' => 20, 'maxlength' => 20)); ?>
+    </div>
 
-	<div class="row">
-		<?php echo $form->label($model,'domain'); ?>
-		<?php echo $form->textField($model,'domain',array('size'=>20,'maxlength'=>20)); ?>
-	</div>
+    <div class="control-group">
+<?php echo $form->textFieldRow($model, 'domain', array('size' => 20, 'maxlength' => 20)); ?>
+    </div>
 
-	<div class="row">
-		<?php echo $form->label($model,'desc'); ?>
-		<?php echo $form->textField($model,'desc',array('size'=>60,'maxlength'=>256)); ?>
-	</div>
+    <div class="control-group">
+<?php echo $form->textFieldRow($model, 'desc', array('size' => 60, 'maxlength' => 256)); ?>
+    </div>
 
-	<div class="row buttons">
-		<?php echo CHtml::submitButton('Search'); ?>
-	</div>
+    <div class="control-group buttons">
+        <?php
+        $this->widget('bootstrap.widgets.TbButton', array(
+            'label' => '搜索',
+            'type' => 'primary',
+            'size' => 'large'
+        ));
+        ?>
+    </div>
 
 <?php $this->endWidget(); ?>
 

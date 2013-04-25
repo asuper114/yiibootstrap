@@ -254,4 +254,29 @@ class UserModule extends CWebModule {
         return User;
     }
 
+    public static function getUserAssignedChannel($id = "") {
+
+        $user = User::model()->active()->notsafe()->find("id=:id", array(":id" => $id));
+        if ($user === null) {
+            return array();
+        } else {
+            $criteria = new CDbCriteria;
+            $criteria->addInCondition('channel_id', explode(',',$user->channel_id ));
+            $channel = Channel::model()->findAll($criteria);
+            return ($channel===null)?array():$channel;
+        }
+    }
+
+    public static function getUserNoAssignedChannel($id) {
+        $user = User::model()->active()->notsafe()->find("id=:id", array(":id" => $id));
+        if ($user === null) {
+            return array();
+        } else {
+            $criteria = new CDbCriteria;
+            $criteria->addNotInCondition('channel_id', explode(',',$user->channel_id ));
+            $channel = Channel::model()->findAll($criteria);
+            return ($channel===null)?array():$channel;
+        }
+    }
+
 }

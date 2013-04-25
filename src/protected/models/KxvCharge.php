@@ -27,6 +27,14 @@ class KxvCharge extends KxvCActiveRecord {
     public function tableName() {
         return '{{payment_account}}';
     }
+    public function scopes()
+    {
+        return array(
+            'published'=>array(
+                'condition'=>'pay_status=1',
+            ),
+        );
+    }
     public function rules() {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
@@ -34,8 +42,7 @@ class KxvCharge extends KxvCActiveRecord {
             array('username,startDate,endDate', 'safe', 'on' => 'search'),
         );
     }
-    
-    public function attributeLabels() {
+     public function attributeLabels() {
         return array(
             'username' => "用户名",
             'pay_time' => "注册时间",
@@ -73,7 +80,7 @@ class KxvCharge extends KxvCActiveRecord {
     }
     public function getChargeTotal($code_id,$username=NULL){
        
-        $members = KxvMember::model()->getMembers($code_id);
+        $members = KxvMember::model()->y($code_id);
        
         $criteria=new CDbCriteria();
         $criteria->select = 'sum(pay_money)*0.01 as total';
@@ -87,8 +94,17 @@ class KxvCharge extends KxvCActiveRecord {
         return  !empty($charge->total) ? CHtml::link($charge->total,Yii::app()->createUrl("/Kxvad/charge",array("code_id"=>$code_id)),array("class"=>"external_link")):"";
                 
        // return isset($charge->total)?$charge->total:0;
-        
         //print_r($a);exit;
+    }
+    
+    public function getChargeById($user_id){
+        $criteria=new CDbCriteria();
+        $criteria->select = 'sum(pay_money)*0.01 as total';
+        $criteria->compare("user_id",$user_id); 
+        $criteria->order = 'pay_money desc';
+        $charge = self::model()->published()->find($criteria);
+        return !empty($charge->total) ? $charge->total : 0;
+       //->with(array('select'=>'sum(pay_money)*0.01 as total')) 
     }
 
 }

@@ -111,7 +111,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'name' => 'id',
             'header' => '充值金额',
             'type' => 'raw',
-            'value' => '',
+            'value' => 'KxvCharge::model()->getChargeById($data->id)',
         ),
     ),
 ));

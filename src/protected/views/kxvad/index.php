@@ -19,7 +19,7 @@ $('.search-form form').submit(function(){
 });
 ");
 ?>
-<?php echo CHtml::link(Yii::t('channel', 'Advanced Search'), '#', array('class' => 'search-button')); ?>
+<?php echo CHtml::link(Yii::t('channel', 'Advanced Search'), '#', array('class' => 'search-button btn btn-primary')); ?>
 <div class="search-form" style="display:none">
     <div class="wide form">
 

@@ -4,11 +4,12 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="form">
+<div class="form-horizontal">
 
     <?php
     $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
         'id' => 'channel-form',
+        'type'=>'horizontal',
         'enableAjaxValidation' => false,
         'htmlOptions' => array('class' => 'well'),
             ));
@@ -18,22 +19,22 @@
 
 <?php echo $form->errorSummary($model); ?>
 
-    <div class="row5">
+    <div class="control-group">
 
         
         
 <?php echo $form->textFieldRow($model, 'channel_name', array('size' => 20, 'maxlength' => 20,'disabled'=>($this->action->id =='update' ? true:false))); ?>
     </div>
 
-    <div class="row5">
+    <div class="control-group">
 <?php echo $form->textFieldRow($model, 'domain', array('size' => 20, 'maxlength' => 20)); ?>
     </div>
 
-    <div class="row5">
+    <div class="control-group">
 <?php echo $form->textFieldRow($model, 'desc', array('size' => 60, 'maxlength' => 256)); ?>
     </div>
 
-    <div class="row5 buttons">
+    <div class="control-group buttons">
 <?php $this->widget('bootstrap.widgets.TbButton', array('type' => 'primary', 'buttonType' => 'submit', 'label' => $model->isNewRecord ? Yii::t('channel', 'Create') : Yii::t('channel', 'Save'))); ?>
     </div>
 
