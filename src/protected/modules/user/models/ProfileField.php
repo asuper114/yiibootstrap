@@ -6,12 +6,12 @@ class ProfileField extends CActiveRecord
 	const VISIBLE_REGISTER_USER=2;
 	const VISIBLE_ONLY_OWNER=1;
 	const VISIBLE_NO=0;
-	
+
 	const REQUIRED_NO = 0;
 	const REQUIRED_YES_SHOW_REG = 1;
 	const REQUIRED_NO_SHOW_REG = 2;
 	const REQUIRED_YES_NOT_SHOW_REG = 3;
-	
+
 	/**
 	 * The followings are the available columns in table 'profiles_fields':
 	 * @var integer $id
@@ -102,7 +102,7 @@ class ProfileField extends CActiveRecord
 			'visible' => UserModule::t('Visible'),
 		);
 	}
-	
+
 	public function scopes()
     {
         return array(
@@ -127,7 +127,7 @@ class ProfileField extends CActiveRecord
             ),
         );
     }
-    
+
     /**
      * @param $value
      * @return formated value (string)
@@ -135,7 +135,7 @@ class ProfileField extends CActiveRecord
     public function widgetView($model) {
     	if ($this->widget && class_exists($this->widget)) {
 			$widgetClass = new $this->widget;
-			
+
     		$arr = $this->widgetparams;
 			if ($arr) {
 				$newParams = $widgetClass->params;
@@ -145,18 +145,18 @@ class ProfileField extends CActiveRecord
 				}
 				$widgetClass->params = $newParams;
 			}
-			
+
 			if (method_exists($widgetClass,'viewAttribute')) {
 				return $widgetClass->viewAttribute($model,$this);
 			}
-		} 
+		}
 		return false;
     }
-    
+
     public function widgetEdit($model,$params=array()) {
     	if ($this->widget && class_exists($this->widget)) {
 			$widgetClass = new $this->widget;
-			
+
     		$arr = $this->widgetparams;
 			if ($arr) {
 				$newParams = $widgetClass->params;
@@ -166,14 +166,14 @@ class ProfileField extends CActiveRecord
 				}
 				$widgetClass->params = $newParams;
 			}
-			
+
 			if (method_exists($widgetClass,'editAttribute')) {
 				return $widgetClass->editAttribute($model,$this,$params);
 			}
 		}
 		return false;
     }
-	
+
 	public static function itemAlias($type,$code=NULL) {
 		$_items = array(
 			'field_type' => array(
@@ -205,7 +205,7 @@ class ProfileField extends CActiveRecord
 		else
 			return isset($_items[$type]) ? $_items[$type] : false;
 	}
-	
+
 	/**
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.

@@ -4,7 +4,7 @@ class AdminController extends Controller
 {
 	public $defaultAction = 'admin';
 	public $layout='//layouts/column2';
-	
+
 	private $_model;
 
 	/**
@@ -26,7 +26,8 @@ class AdminController extends Controller
 		return array(
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
 				'actions'=>array('admin','delete','create','update','view'),
-				'users'=>UserModule::getAdmins(),
+				'users'=>array('@'),
+                            //'users'=>UserModule::getAdmins(),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -108,12 +109,13 @@ class AdminController extends Controller
 	{
 		$model=$this->loadModel();
 		$profile=$model->profile;
+
 		$this->performAjaxValidation(array($model,$profile));
 		if(isset($_POST['User']))
 		{
 			$model->attributes = $_POST['User'];
 			$profile->attributes=$_POST['Profile'];
-			
+
 			if($model->validate()&&$profile->validate()) {
 				$old_password = User::model()->notsafe()->findByPk($model->id);
 				if ($old_password->password!=$model->password) {
@@ -125,7 +127,6 @@ class AdminController extends Controller
 				$this->redirect(array('view','id'=>$model->id));
 			} else $profile->validate();
 		}
-
 		$this->render('update',array(
 			'model'=>$model,
 			'profile'=>$profile,
@@ -153,7 +154,7 @@ class AdminController extends Controller
 		else
 			throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
 	}
-	
+
 	/**
      * Performs the AJAX validation.
      * @param CModel the model to be validated
@@ -166,8 +167,8 @@ class AdminController extends Controller
             Yii::app()->end();
         }
     }
-	
-	
+
+
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
@@ -185,6 +186,6 @@ class AdminController extends Controller
 		}
 		return $this->_model;
 	}
-        
-	
+
+
 }

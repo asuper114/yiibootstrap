@@ -14,7 +14,14 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'username'); ?>
-        <?php echo $form->textField($model, 'username', array('size' => 20, 'maxlength' => 20)); ?>
+        <?php
+        if($model->isNewRecord){
+            echo $form->textField($model, 'username', array('size' => 20, 'maxlength' => 20));
+        }else{
+           echo $model->username;
+        }
+
+        ?>
 <?php echo $form->error($model, 'username'); ?>
     </div>
 
