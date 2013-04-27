@@ -39,7 +39,7 @@ class AuthitemController extends SBaseController {
    * @return Boolean true if user has the authority role
    */
   protected function beforeAction($action) {
-    
+
 //    if (!$this->module->isInstalled() && $action->id != "install") {
 //      $this->redirect(array("install"));
 //      return false;
@@ -48,16 +48,16 @@ class AuthitemController extends SBaseController {
     if ($this->module->debug) {
       return true;
     }
-    
+
     if (Yii::app()->user->checkAccess(Helper::findModule('srbac')->superUser) ) {
-        
+
       return true;
     } else {
-        
+
       parent::beforeAction($action);
     }
   }
-  
+
   public function actionGetUsers($term){
     $list = Helper::getAllusers($term);
     echo CJSON::encode($list);

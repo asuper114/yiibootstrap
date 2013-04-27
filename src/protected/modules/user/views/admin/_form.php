@@ -75,11 +75,7 @@ label .labelForRadio{display:inline-block;width:auto;float:left;}
         <div class='checkboxList'><?php //echo Chtml::checkBoxList('channel_id','',  Channel::model()->loadItems(),array('template'=>'{input}{label}','separator'=>'','labelOptions'=>array('class'=>'labelForCheck')));?></div>
     </div>
 -->
-<div class="row">
-    <?php echo $form->labelEx($model, 'channel_id'); ?>
-        <?php echo $form->checkBoxList($model, 'channel_id', Channel::model()->loadItems()); ?>
-    <?php echo $form->error($model, 'channel_id'); ?>
-</div>
+
     <div class="row buttons">
 <?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t('Create') : UserModule::t('Save')); ?>
     </div>

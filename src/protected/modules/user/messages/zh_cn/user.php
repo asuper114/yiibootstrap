@@ -39,6 +39,12 @@ return array(
     'Edit'=>'编辑',
     'Manage Users'=>'管理用户列表',
     'Logout'=>'退出',
-    'Operations'=>'操作'
-    
+    'Operations'=>'操作',
+    'Profile'=>'个人资料',
+    'Change password'=>'修改密码',
+    'Edit profile'=>'编辑个人资料',
+    'Your profile'=>'你的个人资料',
+    'My Profile'=>'我的个人资料',
+
+
 );

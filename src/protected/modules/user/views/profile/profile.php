@@ -23,7 +23,7 @@ $this->menu=array(
 		<th class="label"><?php echo CHtml::encode($model->getAttributeLabel('username')); ?></th>
 	    <td><?php echo CHtml::encode($model->username); ?></td>
 	</tr>
-	<?php 
+	<?php
 		$profileFields=ProfileField::model()->forOwner()->sort()->findAll();
 		if ($profileFields) {
 			foreach($profileFields as $field) {

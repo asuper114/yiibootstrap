@@ -91,6 +91,7 @@ class SrbacModule extends CWebModule {
         // import the module-level models and components
         $this->setImport(array(
             'srbac.models.*',
+            'user.models.*',
             'srbac.components.Helper',
             'srbac.components.SHtml',
             'srbac.controllers.SBaseController'
@@ -264,7 +265,7 @@ class SrbacModule extends CWebModule {
                 $itemChildTableName = preg_replace('/{{(.*?)}}/', $tablePrefix . '\1', $itemChildTableName);
                 $assignmentTableName = preg_replace('/{{(.*?)}}/', $tablePrefix . '\1', $assignmentTableName);
             }
-           
+
             if (in_array($itemTableName, $tables) && in_array($itemChildTableName, $tables) && in_array($assignmentTableName, $tables)) {
                 return true;
             } else {
@@ -344,6 +345,11 @@ class SrbacModule extends CWebModule {
         } else {
             return "";
         }
+    }
+    public static function getUserAssignedRoles($id = NULL){
+        if(empty($id)) $id = Yii::app()->user->getId();
+        $userAssignedRoles = Helper::getUserAssignedRoles($id);
+        return $userAssignedRoles ==null ? array():SHtml::listData($userAssignedRoles, 'name', 'name');
     }
 
 }

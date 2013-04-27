@@ -55,7 +55,7 @@ class Kxvad extends KxvCActiveRecord {
       'alias' => 'ad',
       'select' => 'ad.id, ad.web, ad.code_id',
       ));
-     * 
+     *
 
       } */
 
@@ -64,12 +64,28 @@ class Kxvad extends KxvCActiveRecord {
         $criteria->select = 'ad.id,ad.web,ad.jq_file_url,ad.code_id,count(member.id) as total';
         $criteria->alias = 'ad';
         //$criteria->joinType = 'lef join';
-        $criteria->with = 'member'; //调用relations   
+        $criteria->with = 'member'; //调用relations
         $criteria->group = 'ad.id';
-        
-        $criteria->compare('web', $this->web, true);
-        
-        
+        $userRoles = Yii::app()->user->getUserAssignedRoles();
+
+        if(Yii::app()->user->isMaster()){
+
+        }else{
+            //$userAssingedChannel = Yii::app()->getModule('user')->getUserChannelById();
+            $user = Yii::app()->getModule('user')->user();
+            $arrChannelId = explode(',',$user->channel_id );
+            $arrChannelId = array_unique(array_filter(($arrChannelId) ));
+            if(empty($arrChannelId)){
+                $criteria->compare('web', '-1', true);
+            }else{
+                $criteria->addNotInCondition('web', $arrChannelId);
+            }
+
+           // $criteria->compare('web', $this->web, true);
+        }
+
+
+
         return new CActiveDataProvider(get_class($this), array(
                     'pagination' => array(
                         'pageSize' => 30, //设置每页显示20条

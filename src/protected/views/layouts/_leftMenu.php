@@ -1,34 +1,42 @@
 <a href="javascript:void(0)" class="sidebar_switch on_switch ttip_r" oldtitle="Hide Sidebar">Sidebar switch</a>
 <div class="sidebar">
     <?php
+    $items = array();
+    $items[] = array('label' => 'List header',);
+    $items[] = array('label' => '首页', 'url' => array('/site/index'), 'icon' => 'icon-home',);
+    $items[] = array('label' => '广告统计', 'url' => array('/kxvad/index'));
+    if (Yii::app()->user->isAdmin()||Yii::app()->user->isMaster()) {
+        $items[] = array('label' => '渠道商管理', 'url' => '#', 'linkOptions' => array('class' => ''),
+            'submenuOptions' => array('class' => false),
+            'items' => array(
+                array('label' => '添加', 'url' => array('/channel/create')),
+                array('label' => '列表', 'url' => array('/channel/admin')),
+                array('label' => '分配', 'url' => array('/channel/assign')),
+            ),
+        );
+    }
+    if (Yii::app()->user->isAdmin()||Yii::app()->user->isMaster()) {
+        $items[] = array('label' => '用户管理', 'url' => '#userMeun', 'linkOptions' => array('class' => ''),
+            'submenuOptions' => array('class' => false),
+            'items' => array(
+                array('label' => '添加用户', 'url' => array('/user/admin/create')),
+                array('label' => '用户列表', 'url' => array('/user/admin')),
+            ),
+        );
+    }
+    if (Yii::app()->user->isAdmin()) {
+        $items[] = array('label' => '系统设置', 'url' => array('/srbac'),);
+    }
+
+    $items[] = '';
+    $items[] = array('label' => '清空缓存', 'url' => array('/site/clear'));
+
     $this->widget('bootstrap.widgets.TbMenu', array(
         'id' => 'leftMenu',
         'type' => 'list',
         //'dropup'=>true,
         // 'htmlOptions'=>array('class'=>'sidebar-menu'),
-        'items' => array(
-            array('label' => 'List header',),
-            array('label' => '首页', 'url' => array('/site/index'), 'icon' => 'icon-home',),
-            array('label' => '广告统计', 'url' => array('/kxvad/index')),
-            array('label' => '渠道商管理', 'url' => '#', 'linkOptions' => array('class' => ''),
-                'submenuOptions' => array('class' => false),
-                'items' => array(
-                    array('label' => '添加', 'url' => array('/channel/create')),
-                    array('label' => '列表', 'url' => array('/channel/admin')),
-                    array('label' => '分配', 'url' => array('/channel/assign')),
-                ),
-            ),
-            array('label' => '用户管理', 'url' => '#userMeun', 'linkOptions' => array('class' => ''),
-                'submenuOptions' => array('class' => false),
-                'items' => array(
-                    array('label' => '添加用户', 'url' => array('/user/admin/create')),
-                    array('label' => '用户列表', 'url' => array('/user/admin')),
-                ),
-            ),
-            array('label' => '系统设置', 'url' => array('/srbac'),),
-            '',
-            array('label' => '清空缓存', 'url' => array('/site/clear')),
-        )
+        'items' => $items,
     ));
     ?>
 
@@ -37,13 +45,13 @@
         <div class="antiScroll">
                 <div class="antiscroll-inner" style="width: 240px; height: 305px; ">
                         <div class="antiscroll-content" style="height: 305px; ">
-                
+
                                 <div class="sidebar_inner" style="margin-bottom: -92px; min-height: 100%; ">
                                         <form action="http://tzd-themes.com/gebo_admin/index.php?uid=1&amp;page=search_page" class="input-append" method="post">
                                                 <input autocomplete="off" name="query" class="search_query input-medium" size="16" type="text" placeholder="Search..."><button type="submit" class="btn"><i class="icon-search"></i></button>
                                         </form>
                                         <div id="side_accordion" class="accordion">
-                                                
+
                                                 <div class="accordion-group">
                                                         <div class="accordion-heading">
                                                                 <a href="#collapseOne" data-parent="#side_accordion" data-toggle="collapse" class="accordion-toggle">
@@ -95,7 +103,7 @@
                                                                                 <li><a href="javascript:void(0)">Users</a></li>
                                                                                 <li><a href="javascript:void(0)">Users groups</a></li>
                                                                         </ul>
-                                    
+
                                                                 </div>
                                                         </div>
                                                 </div>
@@ -178,10 +186,10 @@
                                                 </div>
 
                                         </div>
-                                        
+
                                         <div class="push" style="height: 92px; "></div>
                                 </div>
-                                   
+
                                 <div class="sidebar_info" style="height: 92px; ">
                                         <ul class="unstyled">
                                                 <li>
@@ -197,14 +205,14 @@
                                                         <strong>New registrations</strong>
                                                 </li>
                                         </ul>
-                                </div> 
-                        
+                                </div>
+
                         </div>
                 </div>
         <div class="antiscroll-scrollbar antiscroll-scrollbar-vertical" style="height: 130.77635327635326px; top: 0px; "></div>
-        
+
         </div>
-    
+
     -->
 
 </div>

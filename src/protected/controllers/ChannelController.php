@@ -150,10 +150,6 @@ class ChannelController extends Controller {
         $data['revoke'] = true;
         $data['assign'] = true;
 
-        $revokeChannel = Yii::app()->request->getParam('revokeChannel', 0);
-        if($revokeChannel){
-            
-        }
         //$data['userAssignedChannel'] = Yii::app()->getModule('user')->getUserAssignedChannel($userId) ;
         if (!Yii::app()->request->isAjaxRequest) {
             $this->render('assign', array(
@@ -162,6 +158,29 @@ class ChannelController extends Controller {
             ));
         } else {
             $this->_GetChannel();
+        }
+    }
+
+    public function actionAssignChannel() {
+        //$revokeChannel = Yii::app()->request->getParam('revokeChannel', 0);
+        if (isset($_SERVER['REQUEST_METHOD']) && ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')) {
+            //['Channel']['channel_id']['revoke'];
+            $userId = isset($_REQUEST['User']['id']) ? $_REQUEST['User']['id'] : NULL;
+            $revokeChannel = Yii::app()->request->getParam('revokeChannel');
+            $revokeId = isset($_REQUEST['Channel']['channel_id']['revoke']) ? $_REQUEST['Channel']['channel_id']['revoke'] : NULL;
+            if (is_array($revokeId) && !empty($userId)&&$revokeChannel) {
+                //修改数据库
+                    Yii::app()->getModule('user')->revokeChannel($userId, $revokeId);
+            }
+
+            $assignId = isset($_REQUEST['Channel']['channel_id']['assign']) ? $_REQUEST['Channel']['channel_id']['assign'] : NULL;
+            $assignChannel = Yii::app()->request->getParam('assignChannel');
+            if (is_array($assignId) && !empty($userId) && $assignChannel) {
+
+                Yii::app()->getModule('user')->assignChannel($userId, $assignId);
+            }
+             //加载模版
+                $this->_GetChannel();
         }
     }
 

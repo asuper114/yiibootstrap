@@ -410,7 +410,7 @@ class Helper {
     }
     return false;
   }
-  
+
   public static function checkInstall($key, $value) {
     if (in_array($key, explode(",", SrbacModule::PRIVATE_ATTRIBUTES))) {
       return;
@@ -522,7 +522,7 @@ class Helper {
     fclose($f);
     return true;
   }
-  
+
   /**
    * Gets all users array for autocomplete textbox
    */

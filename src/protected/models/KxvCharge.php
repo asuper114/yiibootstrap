@@ -11,7 +11,7 @@ class KxvCharge extends KxvCActiveRecord {
     public $total;
     public $startDate;
     public $endDate;
-    
+
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
@@ -56,18 +56,18 @@ class KxvCharge extends KxvCActiveRecord {
         if($code_id = Yii::app()->request->getQuery('code_id')){
             $members = KxvMember::model()->getMembers($code_id,$this->username);
         }
-        
+
         $criteria = new CDbCriteria;
-        $criteria->addCondition("pay_status=1"); 
+        $criteria->addCondition("pay_status=1");
         $criteria->addInCondition('user_id', $members);
         if (!empty($this->startDate)) {
-            
+
             $criteria->addCondition("FROM_UNIXTIME(pay_time,'%Y-%m-%d') >= '" . $this->startDate . "'");
         }
         if (!empty($this->endDate)) {
             $criteria->addCondition("FROM_UNIXTIME(pay_time,'%Y-%m-%d') <= '" . $this->endDate . "'");
         }
-        
+
         return new CActiveDataProvider(get_class($this), array(
                     'pagination' => array(
                         'pageSize' => 30,
@@ -79,32 +79,32 @@ class KxvCharge extends KxvCActiveRecord {
                 ));
     }
     public function getChargeTotal($code_id,$username=NULL){
-       
-        $members = KxvMember::model()->y($code_id);
-       
+
+        $members = KxvMember::model()->getMembers($code_id);
+
         $criteria=new CDbCriteria();
         $criteria->select = 'sum(pay_money)*0.01 as total';
-        $criteria->addCondition("pay_status=1"); 
+        $criteria->addCondition("pay_status=1");
         $criteria->addInCondition('user_id', $members);
-        
-        
+
+
         $charge = self::model()->find($criteria);
-       
-        
+
+
         return  !empty($charge->total) ? CHtml::link($charge->total,Yii::app()->createUrl("/Kxvad/charge",array("code_id"=>$code_id)),array("class"=>"external_link")):"";
-                
+
        // return isset($charge->total)?$charge->total:0;
         //print_r($a);exit;
     }
-    
+
     public function getChargeById($user_id){
         $criteria=new CDbCriteria();
         $criteria->select = 'sum(pay_money)*0.01 as total';
-        $criteria->compare("user_id",$user_id); 
+        $criteria->compare("user_id",$user_id);
         $criteria->order = 'pay_money desc';
         $charge = self::model()->published()->find($criteria);
         return !empty($charge->total) ? $charge->total : 0;
-       //->with(array('select'=>'sum(pay_money)*0.01 as total')) 
+       //->with(array('select'=>'sum(pay_money)*0.01 as total'))
     }
 
 }

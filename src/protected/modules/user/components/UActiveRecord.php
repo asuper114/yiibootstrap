@@ -1,5 +1,5 @@
 <?php
-class UActiveRecord extends CActiveRecord
+class UActiveRecord extends MyCActiveRecord
 {
         /**
          * Extends setAttributes to handle active date fields
@@ -22,13 +22,13 @@ class UActiveRecord extends CActiveRecord
 						$class->params = $newParams;
 					}
 					if (method_exists($class,'setAttributes')) {
-						$values[$fieldName] = $class->setAttributes($values[$fieldName],$this,$fieldName); 
+						$values[$fieldName] = $class->setAttributes($values[$fieldName],$this,$fieldName);
 					}
 				}
 			}
 			parent::setAttributes($values,$safeOnly);
 		}
-		
+
 		public function behaviors(){
 			return Yii::app()->getModule('user')->getBehaviorsFor(get_class($this));
 		}

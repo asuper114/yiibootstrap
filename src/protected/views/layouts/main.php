@@ -6,7 +6,7 @@
         <meta name="language" content="en" />
 
         <!-- blueprint CSS framework -->
-        
+
         <!--[if lt IE 8]>
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/ie.css" media="screen, projection" />
         <![endif]-->
@@ -17,7 +17,7 @@
             .sub-memu{display: list-item;text-align: -webkit-match-parent;margin-left: 0;list-style-type: none;}
             </style>
 
-            
+
     </head>
     <body>
         <div id="maincontainer" class="clearfix">
@@ -33,10 +33,10 @@
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo Yii::app()->bootstrap->getAssetsUrl();?>/img/user_avatar.png" alt="" class="user_avatar"><?php echo Yii::app()->user->name;?> <b class="caret"></b></a>
                                     <ul class="dropdown-menu">
-                                        <li><a href="/index.php?r=user/profile">My Profile</a></li>
+                                        <li><a href="/index.php?r=user/profile"><?php echo Yii::app()->getModule('user')->t('My Profile');?></a></li>
 
                                         <li class="divider"></li>
-                                        <li><a href="/index.php?r=user/logout">Log Out</a></li>
+                                        <li><a href="/index.php?r=user/logout"><?php echo Yii::app()->getModule('user')->t('Logout');?></a></li>
                                     </ul>
                                 </li>
                             </ul>

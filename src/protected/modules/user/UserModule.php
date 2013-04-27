@@ -2,8 +2,8 @@
 
 /**
  * Yii-User module
- * 
- * @author Mikhail Mangushev <mishamx@gmail.com> 
+ *
+ * @author Mikhail Mangushev <mishamx@gmail.com>
  * @link http://yii-user.2mx.org/
  * @license http://www.opensource.org/licenses/bsd-license.php
  * @version $Id: UserModule.php 132 2011-10-30 10:45:01Z mishamx $
@@ -163,7 +163,7 @@ class UserModule extends CWebModule {
 
     /**
      * @param $place
-     * @return boolean 
+     * @return boolean
      */
     public static function doCaptcha($place = '') {
         if (!extension_loaded('gd'))
@@ -255,8 +255,7 @@ class UserModule extends CWebModule {
     }
 
     public static function getUserAssignedChannel($id = "") {
-
-        $user = User::model()->active()->notsafe()->find("id=:id", array(":id" => $id));
+        $user = self::getUserChannelById($id);
         if ($user === null) {
             return array();
         } else {
@@ -266,9 +265,39 @@ class UserModule extends CWebModule {
             return ($channel===null)?array():$channel;
         }
     }
+   /*
+    * 移出渠道商ID
+    */
+    public static function revokeChannel($userId,$revokeId){
+        $user = self::getUserChannelById($userId);
+        $arr = explode(',', $user->channel_id);
+        foreach($revokeId as $key=>$val){
+            $k = array_search($val,$arr);
+            unset($arr[$k]);
+        }
+
+
+        if(is_array($arr)){
+            //update
+            return User::model()->updateByPk($userId,array('channel_id'=>  implode(',', $arr)));
+        }
+    }
+
+    /*
+    * 受限渠道商ID
+    */
+    public static function assignChannel($userId,$revokeId){
+        $user = self::getUserChannelById($userId);
+        $arr = explode(',', $user->channel_id);
+        $arr = array_unique(array_filter(array_merge($arr,$revokeId)));
+        if(is_array($arr)){
+            //update
+            return User::model()->updateByPk($userId,array('channel_id'=>  implode(',', $arr)));
+        }
+    }
 
     public static function getUserNoAssignedChannel($id) {
-        $user = User::model()->active()->notsafe()->find("id=:id", array(":id" => $id));
+        $user = self::getUserChannelById($id);
         if ($user === null) {
             return array();
         } else {
@@ -277,6 +306,12 @@ class UserModule extends CWebModule {
             $channel = Channel::model()->findAll($criteria);
             return ($channel===null)?array():$channel;
         }
+    }
+    public static function getUserChannelById($id=NULL){
+        if(empty($id)) $id = Yii::app()->user->getId();
+        $user = User::model()->active()->notsafe()->find("id=:id", array(":id" => $id));
+        return $user;
+
     }
 
 }

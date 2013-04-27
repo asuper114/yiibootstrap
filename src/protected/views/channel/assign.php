@@ -8,7 +8,7 @@
 <div class="row-fluid">
     <div class="span3">
         <h2 class="text-center">用户列表</h>
-        
+
     </div>
     <div class="span3">
         <h2 class="text-center">已分配的渠道商</h>
@@ -20,8 +20,8 @@
 </div>
 -->
 <div class="row-fluid">
-<?php echo CHtml::beginForm(); ?>
-    <table class="table ">  
+<?php echo CHtml::beginForm('','POST',array('name'=>'assignChannel')); ?>
+    <table class="table ">
         <caption>渠道商分配</caption>
         <thead>
             <tr>
@@ -34,7 +34,7 @@
         <tbody>
 
             <tr>
-                
+
                 <?php echo CHtml::errorSummary($model); ?>
                 <td>
 
@@ -63,11 +63,11 @@
                        '//channel/_assign_channel', array('model' => $model, 'data' => $data)
                 );
                 ?>
-               
+
             </tr>
 
 
         </tbody>
-    </table> 
+    </table>
      <?php //echo CHtml::endForm(); ?>
 </div>

@@ -14,7 +14,7 @@
                 'size' => 'large',
                 'disabled'=>$data['assign'],
                 //'active'=>true,
-                'url' => array('getChannel','assignChannel'=>1),
+                'url' => array('channel/AssignChannel','assignChannel'=>1),
                 'htmlOptions'=>array('live'=>false),
                 'ajaxOptions' => array(
                     'type' => 'POST',
@@ -24,11 +24,11 @@
             ?>
             <br/>
             <?php
-           
-            $this->widget('bootstrap.widgets.TbButton', array( 
+
+            $this->widget('bootstrap.widgets.TbButton', array(
                 'label' => '右移',
                 'disabled'=>$data['revoke'],
-                'url' => array('getChannel','revokeChannel'=>1),
+                'url' => array('/channel/AssignChannel','revokeChannel'=>1),
                 'buttonType' => 'ajaxSubmit',
                 'size' => 'large',
                'htmlOptions'=>array('live'=>false),
@@ -37,7 +37,7 @@
                     'update'=>'#channel',
                     ),
              ));
-            ?> 
+            ?>
 
         </div>
 
